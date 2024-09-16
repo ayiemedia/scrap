@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scraping Tools By Ayie</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"], select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scraping Tools By Ayie</h1>
+        <form id="scrapeForm">
+            <label for="keywords">Keywords:</label>
+            <input type="text" id="keywords" name="keywords" placeholder="Enter keywords" required>
+
+            <label for="saveFormat">Save into:</label>
+            <select id="saveFormat" name="saveFormat" required>
+                <option value="" disabled selected>Select format</option>
+                <option value="Excel">Excel</option>
+                <option value="CSV">CSV</option>
+                <option value="JSON">JSON</option>
+            </select>
+
+            <button type="submit">Scrape</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('scrapeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const keywords = document.getElementById('keywords').value;
+            const saveFormat = document.getElementById('saveFormat').value;
+
+            fetch('https://your-render-url.onrender.com/scrape', { // Replace with your Render URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ keywords, saveFormat })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = `Result: ${data.result}\nUsed Proxy: ${data.proxy}`;
+            })
+            .catch(error => {
+                document.getElementById('result').innerText = `Error: ${error}`;
+            });
+        });
+    </script>
+</body>
+</html>
